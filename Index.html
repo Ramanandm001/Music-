@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramanand MUSIC PLAYER</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="music-player-body">
+        <h2>Ramanand MUSIC PLAYER </h2>
+        <img class="track-image" id="trackImage" src="#" alt="Track Image">
+
+        <h3 id="trackName"></h3>
+        <audio id="audioPlayer" controls>
+            <source src="music/Creed - One Last Breath (Official Video).mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+            <button class="prev-button" id="prevButton">&#9665;</button>
+            <button class="play-pause-button" id="playPauseButton">&#9658;</button>
+            <button class="next-button" id="nextButton">&#9655;</button>
+        </div>
+    </div>
+    <script>
+        
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const nextButton = document.getElementById('nextButton');
+        const prevButton = document.getElementById('prevButton');
+        const trackNameElement = document.getElementById('trackName');
+        const trackImageElement = document.getElementById('trackImage');
+        
+        
+        const audioFiles = [
+            { name: '1', src: 'music/1.mp3', image: 'track image/1.jpg' },
+            { name: '2', src: 'music/2.mp3', image: 'track image/2.jpg' },
+            { name: '3', src: 'music/3.mp3', image: 'track image/3.jpg' },
+            { name: '4', src: 'music/4.mp3', image: 'track image/4.jpg' },
+            { name: '5', src: 'music/5.mp3', image: 'track image/5.jpg' },
+            { name: '6', src: 'music/6.mp3', image: 'track image/6.jpg' },
+            { name: '7', src: 'music/7.mp3', image: 'track image/7.jpg' },
+            { name: '8', src: 'music/8.mp3', image: 'track image/8.jpg' },
+            { name: '9', src: 'music/9.mp3', image: 'track image/9.jpg' },
+            { name: '10', src: 'music/10.mp3', image: 'track image/10.jpg' },
+            { name: '11', src: 'music/11.mp3', image: 'track image/11.jpg' },
+            { name: '12', src: 'music/12.mp3', image: 'track image/12.jpg' },
+            
+        ];
+        
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        
+        function updateTrackName() {
+            trackNameElement.textContent = audioFiles[currentTrack].name;
+            trackImageElement.src = audioFiles[currentTrack].image;
+        }
+
+        
+        function togglePlayPause() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseButton.textContent = '\u25BA'; 
+            } else {
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseButton.textContent = '\u275A\u275A'; 
+            }
+        }
+        
+        playPauseButton.addEventListener('click', () => {
+            togglePlayPause();
+        });
+        
+        nextButton.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % audioFiles.length;
+            audioPlayer.src = audioFiles[currentTrack].src;
+            updateTrackName();
+            if (isPlaying) {
+                audioPlayer.play(); 
+            }
+        });
+        
+        prevButton.addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + audioFiles.length) % audioFiles.length;
+            audioPlayer.src = audioFiles[currentTrack].src;
+            updateTrackName();
+            if (isPlaying) {
+                audioPlayer.play(); 
+            }
+        });
+
+    
+        updateTrackName();
+    </script>
+
+</body>
+
+</html>
